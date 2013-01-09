@@ -17,6 +17,7 @@ ActiveAdmin.register Goldencobra::Article, :as => "Article" do
   filter :template_file, :label =>  I18n.t("filter_template", :scope => [:goldencobra, :filter], :default => "Template Datei")
   filter :created_at, :label =>  I18n.t("filter_created", :scope => [:goldencobra, :filter], :default => "erstellt")
   filter :updated_at, :label =>  I18n.t("filter_updated", :scope => [:goldencobra, :filter], :default => "bearbeitet")
+  filter :teaser
 
   scope "Alle", :scoped, :default => true
   scope "online", :active

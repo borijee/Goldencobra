@@ -95,6 +95,7 @@ module Goldencobra
     scope :parent_ids_in, lambda { |art_id| subtree_of(art_id) }
     scope :modified_since, lambda{ |date| where("updated_at > ?", Date.parse(date))}
     scope :for_sitemap, where('dynamic_redirection = "false" AND ( external_url_redirect IS NULL OR external_url_redirect = "") AND active = 1 AND robots_no_index =  0')
+    scope :test12
 
     search_methods :parent_ids_in
     search_methods :parent_ids_in_eq
