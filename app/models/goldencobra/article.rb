@@ -95,10 +95,21 @@ module Goldencobra
     scope :parent_ids_in, lambda { |art_id| subtree_of(art_id) }
     scope :modified_since, lambda{ |date| where("updated_at > ?", Date.parse(date))}
     scope :for_sitemap, where('dynamic_redirection = "false" AND ( external_url_redirect IS NULL OR external_url_redirect = "") AND active = 1 AND robots_no_index =  0')
-    scope :test12
+    #Boris neu
+    scope :filter_article_frontend_tags_contains, lambda{ |filter_name| tagged_with(filter_name, on: :frontend_tags, :match_all => true)}
+    scope :filter_article_tags_contains, lambda{ |filter_name| tagged_with(filter_name, on: :tags, :match_all => true)}
+
+    #Article.tagged_with('1234', on: :frontend_tags, any: true)
+    #scope :filter_article_breadcrumb_contains, lambda{|breadcrumb| where(:breadcrumb => breadcrumb)}
+
+# tagged_with('münchen', on: :frontend_tags, any: true)
 
     search_methods :parent_ids_in
     search_methods :parent_ids_in_eq
+
+    search_methods :filter_article_frontend_tags_contains
+    search_methods :filter_article_tags_contains
+    #search_methods :filter_article_breadcrumb
 
     if ActiveRecord::Base.connection.table_exists?("goldencobra_settings")
       if Goldencobra::Setting.for_key("goldencobra.use_solr") == "true"

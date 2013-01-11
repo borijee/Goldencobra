@@ -16,8 +16,11 @@ ActiveAdmin.register Goldencobra::Article, :as => "Article" do
   filter :url_name, :label =>  I18n.t("filter_url", :scope => [:goldencobra, :filter], :default => "URL")
   filter :template_file, :label =>  I18n.t("filter_template", :scope => [:goldencobra, :filter], :default => "Template Datei")
   filter :created_at, :label =>  I18n.t("filter_created", :scope => [:goldencobra, :filter], :default => "erstellt")
-  filter :updated_at, :label =>  I18n.t("filter_updated", :scope => [:goldencobra, :filter], :default => "bearbeitet")
-  filter :teaser
+  filter :updated_at, :label =>  I18n.t("filter_update", :scope => [:goldencobra, :filter], :default => "bearbeitet")
+  filter :filter_article_frontend_tags, :as => :string, :label =>  I18n.t("filter_update", :scope => [:goldencobra, :filter], :default => "Filter Kriterien")
+  filter :filter_article_tags, :as => :string, :label =>  I18n.t("filter_update", :scope => [:goldencobra, :filter], :default => "interne Tags")
+  #filter :filter_article_breadcrumb, :as => :string, :label => I18n.t("filter_brot", :scope => [:goldencobra, :filter], :default => "Test 12")
+
 
   scope "Alle", :scoped, :default => true
   scope "online", :active
@@ -43,6 +46,7 @@ ActiveAdmin.register Goldencobra::Article, :as => "Article" do
         f.input :frontend_tag_list, hint: "Hier eingetragene Begriffe werden auf &Uuml;bersichtsseiten als Filteroption angeboten.", label: "Filterkriterium"
         f.input :active_since, :hint => "Wenn der Artikel online ist, ab wann ist er Online? Bsp: 02.10.2011 15:35", as: :string, :input_html => { class: "", :size => "20", value: "#{f.object.active_since.strftime('%d.%m.%Y %H:%M') if f.object.active_since}" }
         f.input :active, :hint => "Ist dieser Artikel online zu sehen?"
+        #f.input :active, :hint =>"Artikel filtern "
       end
       if f.object.article_type.present? && f.object.kind_of_article_type.downcase == "show"
         if File.exists?("#{::Rails.root}/app/views/articletypes/#{f.object.article_type_form_file.downcase}/_edit_show.html.erb")
